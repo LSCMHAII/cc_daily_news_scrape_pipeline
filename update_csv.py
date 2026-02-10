@@ -19,7 +19,7 @@ def _load_added_urls(dir_path, txt_prefix):
             continue
     return urls
 
-def add_all_data(base_path, csv_template_path, input_list, txt_prefix, encoding='utf-8-sig'):
+def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix, encoding='utf-8-sig'):
     """Append rows from input_list to a CSV file, skipping duplicates based on `article_url`.
 
     encoding: CSV file encoding to use when reading/writing (defaults to 'utf-8-sig').
@@ -37,7 +37,7 @@ def add_all_data(base_path, csv_template_path, input_list, txt_prefix, encoding=
         raise FileNotFoundError(f"CSV file not found: {csv_template_path}")
 
     # Start with URLs recorded in ADDED_URL_TXT_PREFIX*.txt files
-    existing_urls = _load_added_urls(output_dir, txt_prefix)
+    existing_urls = _load_added_urls(csv_path, txt_prefix)
 
     try:
         existing_df = pd.read_csv(csv_template_path, encoding=encoding)
@@ -55,7 +55,9 @@ def add_all_data(base_path, csv_template_path, input_list, txt_prefix, encoding=
         url = _get(item, 'article_url')
         # Treat empty/None URLs as new entries (you may adjust this policy)
         if url is not None and str(url) in existing_urls:
+            print("Skip url (already exists): ", url)
             continue
+        print("Add url: ", url)
         rows.append([
             _get(item, 'title'),
             _get(item, 'date'),
@@ -118,10 +120,6 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, encoding='utf-8
     
     base = BASE_PATH or ''
     csv_template_path = os.path.join(base, 'csv_template.csv')
-
-    # Build combined DataFrame (does not overwrite original file)
-    df, new_urls, df_new = add_all_data(BASE_PATH, csv_template_path, input_data_list, TXT_PREFIX, encoding=encoding)
-
     
     # Create timestamped result file name
     output_dir = os.path.join(base, 'output')
@@ -129,6 +127,9 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, encoding='utf-8
     year_dir = os.path.join(output_dir, year)
     month_dir = os.path.join(year_dir, month)
     csv_path = os.path.join(month_dir, csv_name)
+
+    # Build combined DataFrame (does not overwrite original file)
+    df, new_urls, df_new = add_all_data(BASE_PATH, csv_template_path, csv_path, input_data_list, TXT_PREFIX, encoding=encoding)
     
     if not os.path.exists(year_dir):
         os.makedirs(year_dir, exist_ok=True)
