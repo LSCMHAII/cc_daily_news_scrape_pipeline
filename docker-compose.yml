@@ -14,7 +14,7 @@ services:
     networks:
       - n8n
     volumes:
-      - NAS:/app/nas_data/pipeline_scrape_daily_news/
+      - NAS:/app/nas_data/
       # - C:\Users\lscm-\Desktop\test_volume\nas_data:/app/nas_data
 
 volumes:
