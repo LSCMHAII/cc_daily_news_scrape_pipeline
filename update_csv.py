@@ -52,6 +52,7 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
         return getattr(i, key, None)
 
     for item in input_list:
+        print('item ', item)
         url = _get(item, 'article_url')
         # Treat empty/None URLs as new entries (you may adjust this policy)
         if url is not None and str(url) in existing_urls:
