@@ -14,8 +14,10 @@ SERVICE_NAME = "daily_news_scrape"
 # BASE_PATH = "./daily_news_data/"
 BASE_PATH = os.getenv("BASE_PATH") or "/nas_data/"
 
-if not (os.path.isdir(BASE_PATH) and os.access(BASE_PATH, os.R_OK)):
-    BASE_PATH = "/app/nas_data/"
+# if not (os.path.isdir(BASE_PATH) and os.access(BASE_PATH, os.R_OK)):
+#     BASE_PATH = "/app/nas_data/"
+
+print('BASE_PATH: ', BASE_PATH)
 
 # prefix for txt file that stores daily added url
 ADDED_URL_TXT_PREFIX = "added_url_"
