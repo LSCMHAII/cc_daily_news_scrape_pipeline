@@ -60,9 +60,10 @@ def run_pipeline_and_callback(callback_url, func, *func_args, **func_kwargs):
 
     finally:
         if callback_url:
+            print('callback_url: ', callback_url)
             try:
                 requests.post(callback_url, json=payload, timeout=20)
-                print("Callback sent successfully. callvback_url: ", callback_url)
+                print("Callback sent successfully.")
             except requests.RequestException as req_e:
                 print(f"Failed to send callback: {req_e}")
         else:
