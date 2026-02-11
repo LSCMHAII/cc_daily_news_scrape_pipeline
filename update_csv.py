@@ -31,13 +31,15 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
     rows = []
     new_urls = []
     
-    output_dir = os.path.join(base_path, 'output')
+    # output_dir = os.path.join(base_path, 'output')
     
     if not os.path.exists(csv_template_path):
         raise FileNotFoundError(f"CSV file not found: {csv_template_path}")
 
+    csv_dir = os.path.dirname(csv_path)
+
     # Start with URLs recorded in ADDED_URL_TXT_PREFIX*.txt files
-    existing_urls = _load_added_urls(csv_path, txt_prefix)
+    existing_urls = _load_added_urls(csv_dir, txt_prefix)
 
     try:
         existing_df = pd.read_csv(csv_template_path, encoding=encoding)

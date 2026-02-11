@@ -63,7 +63,7 @@ Service will listen on `0.0.0.0:5000`.
   -  `date` is required (string, e.g. `20250905`). 
   - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `input` is a list of objects with `article_url`, `title`, `date`, `website_source` field.
-- Functionality: Update daily scraped news details. It will first check if the news are already added by checking `added_url_{date}.txt` file to prevent duplications. After the news are added into the `daily_news_{date}.csv` file, `added_url_{date}.txt` file would also be updated.
+- Functionality: Update daily scraped news details. It will first check if the news are already added by checking `added_url_{date}.txt` file to prevent duplications. After the `daily_news_{date}.csv` file is created / updated, `added_url_{date}.txt` file would also be created / updated.
 - Example payload:
 ```json
 {
