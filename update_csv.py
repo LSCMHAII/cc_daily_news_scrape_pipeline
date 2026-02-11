@@ -24,7 +24,7 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
 
     encoding: CSV file encoding to use when reading/writing (defaults to 'utf-8-sig').
     """
-    cols = ['title', 'date', 'article_url', 'website_source', 'content']
+    cols = ['title', 'date', 'article_url', 'website_source', 'content', 'is_complaint_related', 'incident_category']
     # cols = ['title', 'date', 'article_url', 'complaint_nature', 'complaint_category']
     # cols = ['title', 'date', 'article_url', 'category', 'strength', 'confidence']
 
@@ -70,7 +70,9 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
             # _get(item, 'article_url'),
             ####################################
             _get(item, 'website_source'),
-            _get(item, 'content')
+            _get(item, 'content'),
+            _get(item, 'is_complaint_related'),
+            _get(item, 'incident_category')
             ####################################
             # _get(item, 'complaint_nature'),
             # _get(item, 'complaint_category')
@@ -105,7 +107,7 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, encoding='utf-8
 
     Parameters:
     - base_path: path prefix where `csv_template.csv` is located/should be created
-    - input_data_list: list of dicts with keys `title`, `date`, `article_url`, `website_source`, `content`
+    - input_data_list: list of dicts with keys `title`, `date`, `article_url`, `website_source`, `content`, `is_complaint_related`, `incident_category`
     - encoding: CSV file encoding to use when reading/writing (defaults to 'utf-8-sig')
     """
     
