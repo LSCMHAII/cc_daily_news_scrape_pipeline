@@ -51,8 +51,10 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
             return i.get(key)
         return getattr(i, key, None)
 
-    for item in input_list:
-        print('item ', item)
+    for jsonItem in input_list:
+        # item is wrapped in {'json': {...}} structure
+        item = _get(jsonItem, 'json')
+        # print('item ', item)
         url = _get(item, 'article_url')
         # Treat empty/None URLs as new entries (you may adjust this policy)
         if url is not None and str(url) in existing_urls:

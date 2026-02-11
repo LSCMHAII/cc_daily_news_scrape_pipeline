@@ -62,8 +62,12 @@ def run_pipeline_and_callback(callback_url, func, *func_args, **func_kwargs):
         if callback_url:
             print('callback_url: ', callback_url)
             try:
-                requests.post(callback_url, json=payload, timeout=20)
+                requests.post(callback_url, json=payload, timeout=(20, 60))
                 print("Callback sent successfully.")
+            except requests.exceptions.ConnectTimeout:
+                print("Connection timed out!")
+            except requests.exceptions.Timeout:
+                print("The request timed out")
             except requests.RequestException as req_e:
                 print(f"Failed to send callback: {req_e}")
         else:

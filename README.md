@@ -70,7 +70,7 @@ Service will listen on `0.0.0.0:5000`.
   "callback_url": "https://example.com/webhook",
   "date": "20250905",
   "input": [
-    {"title": "Title 1", "date": "2025-12-19", "article_url": "https://...", "website_source": "source"}
+    {"json": {"title": "Title 1", "date": "2025-12-19", "article_url": "https://...", "website_source": "source"}}
   ]
 }
 ```
@@ -88,11 +88,13 @@ Service will listen on `0.0.0.0:5000`.
   "callback_url": "",
   "date": "20250905",
   "input": [
-    {
-      "content": "...",
-      "title": "演藝學院：有關部門內部溝通未盡完善 團隊汲取經驗",
-      "date": "2025-09-05",
-      "article_url": "https://news.rthk.hk/rthk/ch/component/k2/1821433-20250905.htm?archive_date=2025-09-05"
+    "json": {
+      {
+        "content": "...",
+        "title": "演藝學院：有關部門內部溝通未盡完善 團隊汲取經驗",
+        "date": "2025-09-05",
+        "article_url": "https://news.rthk.hk/rthk/ch/component/k2/1821433-20250905.htm?archive_date=2025-09-05"
+      }
     }
   ]
 }
