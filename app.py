@@ -3,6 +3,7 @@ import threading
 import requests
 from flask import Flask, jsonify, request
 
+from return_news_config import return_news_config
 from update_csv import update_csv_sheet as update_csv
 from check_added_url import check_added_url
 
@@ -158,6 +159,40 @@ def trigger_run():
               APP_CONST,
               input_payload,
               date
+              )
+    )
+    thread.daemon = True
+    thread.start()
+
+    response = {
+        "message": "Task accepted and is running in the background.",
+        "service": SERVICE_NAME
+    }
+    return jsonify(response), 202
+
+@app.route('/news_config', methods=['GET'])
+def trigger_get_news_config():
+    """
+    The entry point for the web service. It receives the launch request.
+        callback_url(string): "https://webhook.site/xxxx-xxxx-xxxx-xxxx"
+        lang(string): "en" or "zh"
+    """
+    
+    print(f"BACKGROUND TASK STARTED for endpoint: /news_config")
+    data = request.get_json(silent=True) or {}
+    if 'callback_url' not in data:
+        print(f"callback_url missing in request body, returning error response.")
+        return jsonify({"error": "Missing 'callback_url' in request body"}), 400
+    
+    callback_url = data['callback_url']
+    lang = data.get('lang', "zh") # default to Chinese if not provided
+    
+    thread = threading.Thread(
+        target=run_pipeline_and_callback,
+        args=(callback_url,
+              return_news_config,
+              APP_CONST,
+              lang
               )
     )
     thread.daemon = True

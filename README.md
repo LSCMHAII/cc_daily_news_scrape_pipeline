@@ -10,6 +10,8 @@ Small Flask service to append news links and content into a csv file.
 - [checked_added_url.py](checked_added_url.py) - Check added news helper
 - [update_csv.py](update_csv.py) — csv update helpers
 - [csv_template.csv](csv_template.csv) - Csv template with header
+- [en_news_config.json](en_news_config.json) - Config for English news sources
+- [zh_news_config.json](zh_news_config.json) - Config for Chinese news sources
 
 **Prerequisites**
 - Docker / Docker Compose OR Python 3.11 and pip
@@ -114,6 +116,18 @@ Service will listen on `0.0.0.0:5000`.
 }
 ```
 
+- GET `/news_config` — Return the news source configuration (e.g. which websites to scrape, and how) for a given language.
+- field:
+  - `lang` is required (string, e.g. `en` or `zh`). The service will return the corresponding config JSON content from `en_news_config.json` or `zh_news_config.json`.
+  - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
+- Example request body:
+```json
+{
+  "callback_url": "https://example.com/webhook",
+  "lang": "en"
+}
+```
+
 **Compose volume & network notes**
 - `docker-compose.yml` mounts `NAS` into the container at `/app/nas_data`. Ensure that path and file permissions match your environment.
 - The compose file references an external network `n8n`. If you don't use it, either create it or remove the network reference.
@@ -128,6 +142,8 @@ Service will listen on `0.0.0.0:5000`.
 Example:
 nas_output
 ├───csv_template.csv
+├───en_news_config.json
+├───zh_news_config.json
 ├───output
 │   └───2025
 │       └───05
