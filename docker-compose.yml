@@ -11,6 +11,7 @@ services:
     #   - stack.env
     environment:
       - BASE_PATH=/app/nas_data/pipeline_scrape_daily_news/
+      # - BASE_PATH=/app/nas_data/
     networks:
       - n8n
     volumes:
