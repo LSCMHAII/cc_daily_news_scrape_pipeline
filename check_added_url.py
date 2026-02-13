@@ -46,6 +46,7 @@ def check_added_url(app_const, input_data_list=None, date=None):
     # - The month directory does not exist
     # - The target txt file does not exist
     if not os.path.exists(year_dir) or not os.path.exists(month_dir) or not os.path.exists(added_path):
+        print(f"Target file not found at {added_path}, returning original list.")
         return {"data": extracted_data_list, "message": "Target file not found; returning original list."}
 
     seen = set()
@@ -57,6 +58,7 @@ def check_added_url(app_const, input_data_list=None, date=None):
                     seen.add(u)
     except Exception:
         # On read failure, be conservative and return original list
+        print(f"Failed to read target file at {added_path}, returning original list.")
         return {"data": input_data_list, "message": "Failed to read target file; returning original list."}
 
     # Filter input list: keep items whose article_url is not in seen

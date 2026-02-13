@@ -12,14 +12,17 @@ def return_news_config(app_const, lang):
     news_config_path = os.path.join(base, f'{lang}_news_config.json')
     
     if not os.path.exists(news_config_path):
+        print(f"News config file not found at {news_config_path}.")
         raise FileNotFoundError(f"News config file not found: {news_config_path}")
     
     try:
         with open(news_config_path, 'r', encoding='utf-8') as f:
             news_config = f.read()
     except Exception as e:
+        print(f"Failed to read news config file at {news_config_path}: {e}")
         raise RuntimeError(f"Failed to read news config file: {e}")
     
+    print(f"Successfully retrieved news config from {news_config_path}.")
     return {"data": news_config, "message": "Successfully retrieved news config"}
 
 if __name__ == "__main__":
