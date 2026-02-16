@@ -103,6 +103,7 @@ def trigger_check_added_url():
     # callback_url = data['callback_url']
     date = data['date']
     input_payload = data.get('input', [])
+    lang = data.get('lang', "zh") # default to Chinese if not provided
     
     if (len(date)!=8) or (not date.isdigit()):
         print(f"Invalid date format in request body, returning error response.")
@@ -126,7 +127,7 @@ def trigger_check_added_url():
     # }
     # return jsonify(response), 202
     
-    return jsonify(check_added_url(APP_CONST, input_payload, date)), 200
+    return jsonify(check_added_url(APP_CONST, input_payload, date, lang)), 200
 
 @app.route('/run', methods=['POST'])
 def trigger_run():
@@ -149,6 +150,7 @@ def trigger_run():
     # callback_url = data['callback_url']
     date = data['date']
     input_payload = data.get('input', [])
+    lang = data.get('lang', "zh") # default to Chinese if not provided
     
     if (len(date)!=8) or (not date.isdigit()):
         print(f"Invalid date format in request body, returning error response.")
@@ -172,7 +174,7 @@ def trigger_run():
     # }
     # return jsonify(response), 202
     
-    return jsonify(update_csv(APP_CONST, input_payload, date)), 200
+    return jsonify(update_csv(APP_CONST, input_payload, date, lang)), 200
 
 @app.route('/news_config', methods=['GET'])
 def trigger_get_news_config():

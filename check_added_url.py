@@ -2,7 +2,7 @@ import os
 import json
 
 
-def check_added_url(app_const, input_data_list=None, date=None):
+def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
     """Return items from input_data_list whose `article_url` is NOT present in added_url_{date}.txt.
 
     If the target txt file is not found, return the original list.
@@ -22,6 +22,7 @@ def check_added_url(app_const, input_data_list=None, date=None):
     month = date[4:6]
     
     base = BASE_PATH or ''
+    base = os.path.join(base, lang)
     
     output_dir = os.path.join(base, 'output')
     year_dir = os.path.join(output_dir, year)
@@ -96,4 +97,4 @@ if __name__ == "__main__":
             "article_url": "https://news.rthk.hk/rthk/ch/component/k2/1821253-20250904.htm"
         }
     }]
-    print(json.dumps(check_added_url({ 'BASE_PATH': './daily_news_data/', 'ADDED_URL_TXT_PREFIX': "added_url_" }, sample, '20250904'), ensure_ascii=False, indent=2))
+    print(json.dumps(check_added_url({ 'BASE_PATH': './daily_news_data/', 'ADDED_URL_TXT_PREFIX': "added_url_" }, sample, '20250904', 'zh'), ensure_ascii=False, indent=2))

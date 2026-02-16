@@ -19,7 +19,7 @@ def _load_added_urls(dir_path, txt_prefix):
             continue
     return urls
 
-def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix, encoding='utf-8-sig'):
+def add_all_data(csv_template_path, csv_path, input_list, txt_prefix, encoding='utf-8-sig'):
     """Append rows from input_list to a CSV file, skipping duplicates based on `article_url`.
 
     encoding: CSV file encoding to use when reading/writing (defaults to 'utf-8-sig').
@@ -30,8 +30,6 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
 
     rows = []
     new_urls = []
-    
-    # output_dir = os.path.join(base_path, 'output')
     
     if not os.path.exists(csv_template_path):
         raise FileNotFoundError(f"CSV file not found: {csv_template_path}")
@@ -102,7 +100,7 @@ def add_all_data(base_path, csv_template_path, csv_path, input_list, txt_prefix,
 
     return df, new_urls, df_new
 
-def update_csv_sheet(app_const, input_data_list=None, date=None, encoding='utf-8-sig'):
+def update_csv_sheet(app_const, input_data_list=None, date=None, lang='zh', encoding='utf-8-sig'):
     """Main entrypoint matching update_sheet.update_excel_sheet signature but for CSV.
 
     Parameters:
@@ -127,6 +125,7 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, encoding='utf-8
     
     base = BASE_PATH or ''
     csv_template_path = os.path.join(base, 'csv_template.csv')
+    base = os.path.join(base, lang)
     
     # Create timestamped result file name
     output_dir = os.path.join(base, 'output')
@@ -136,7 +135,7 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, encoding='utf-8
     csv_path = os.path.join(month_dir, csv_name)
 
     # Build combined DataFrame (does not overwrite original file)
-    df, new_urls, df_new = add_all_data(BASE_PATH, csv_template_path, csv_path, input_data_list, TXT_PREFIX, encoding=encoding)
+    df, new_urls, df_new = add_all_data(csv_template_path, csv_path, input_data_list, TXT_PREFIX, encoding=encoding)
     
     if not os.path.exists(year_dir):
         os.makedirs(year_dir, exist_ok=True)

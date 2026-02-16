@@ -65,12 +65,14 @@ Service will listen on `0.0.0.0:5000`.
   -  `date` is required (string, e.g. `20250905`). 
   - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `input` is a list of objects with `article_url`, `title`, `date`, `website_source` field.
+  - `lang` (string, e.g. `en` or `zh`). The service will save the files in folder `/output/en` or `/output/zh`.
 - Functionality: Update daily scraped news details. It will first check if the news are already added by checking `added_url_{date}.txt` file to prevent duplications. After the `daily_news_{date}.csv` file is created / updated, `added_url_{date}.txt` file would also be created / updated.
 - Example payload:
 ```json
 {
   "callback_url": "https://example.com/webhook",
   "date": "20250905",
+  "lang": "zh",
   "input": [
     {"json": {"title": "Title 1", "date": "2025-12-19", "article_url": "https://...", "website_source": "source"}}
   ]
@@ -83,12 +85,14 @@ Service will listen on `0.0.0.0:5000`.
   - `date` is required (string, e.g. `20250905`). 
   - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `input` is a list of objects with an `article_url` field.
+  - `lang` (string, e.g. `en` or `zh`). The service will check the files in folder `/output/en` or `/output/zh`.
 - Functionality: Check if the article is already added. It will return the item that article_url are not found in daily sheet. No files will be updated by calling this api endpoint.
 - Example request body:
 ```json
 {
   "callback_url": "",
   "date": "20250905",
+  "lang": "zh",
   "input": [
     "json": {
       {
@@ -118,8 +122,8 @@ Service will listen on `0.0.0.0:5000`.
 
 - GET `/news_config` — Return the news source configuration (e.g. which websites to scrape, and how) for a given language.
 - field:
-  - `lang` is required (string, e.g. `en` or `zh`). The service will return the corresponding config JSON content from `en_news_config.json` or `zh_news_config.json`.
   - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
+  - `lang` (string, e.g. `en` or `zh`). The service will return the corresponding config JSON content from `en_news_config.json` or `zh_news_config.json`.
 - Example request body:
 ```json
 {
@@ -145,10 +149,12 @@ nas_output
 ├───en_news_config.json
 ├───zh_news_config.json
 ├───output
-│   └───2025
-│       └───05
-│           └───added_url_20250521.txt
-│           └───daily_news_20250521.csv
+│   └───en
+│   └───zh
+│       └───2025
+│           └───05
+│               └───added_url_20250521.txt
+│               └───daily_news_20250521.csv
 ```
 **Next steps / optional changes**
 - Switch `docker-compose.yml` to `build: .` to let compose build the image locally.
