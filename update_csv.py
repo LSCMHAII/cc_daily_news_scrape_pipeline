@@ -125,13 +125,13 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, lang='zh', enco
     
     base = BASE_PATH or ''
     csv_template_path = os.path.join(base, 'csv_template.csv')
-    base = os.path.join(base, lang)
     
     # Create timestamped result file name
     output_dir = os.path.join(base, 'output')
-    csv_name = f'{CSV_PREFIX}{date}.csv'
-    year_dir = os.path.join(output_dir, year)
+    lang_dir = os.path.join(output_dir, lang)
+    year_dir = os.path.join(lang_dir, year)
     month_dir = os.path.join(year_dir, month)
+    csv_name = f'{CSV_PREFIX}{date}.csv'
     csv_path = os.path.join(month_dir, csv_name)
 
     # Build combined DataFrame (does not overwrite original file)
