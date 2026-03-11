@@ -24,7 +24,7 @@ def add_all_data(csv_template_path, csv_path, input_list, txt_prefix, encoding='
 
     encoding: CSV file encoding to use when reading/writing (defaults to 'utf-8-sig').
     """
-    cols = ['title', 'date', 'article_url', 'website_source', 'content', 'is_complaint_related', 'incident_category']
+    cols = ['title', 'date', 'article_url', 'website_source', 'content', 'is_complaint_related', 'complaint_category', 'complaint_nature']
     # cols = ['title', 'date', 'article_url', 'complaint_nature', 'complaint_category']
     # cols = ['title', 'date', 'article_url', 'category', 'strength', 'confidence']
 
@@ -70,7 +70,8 @@ def add_all_data(csv_template_path, csv_path, input_list, txt_prefix, encoding='
             _get(item, 'website_source'),
             _get(item, 'content'),
             _get(item, 'is_complaint_related'),
-            _get(item, 'incident_category')
+            _get(item, 'complaint_category'),
+            _get(item, 'complaint_nature')
             ####################################
             # _get(item, 'complaint_nature'),
             # _get(item, 'complaint_category')
