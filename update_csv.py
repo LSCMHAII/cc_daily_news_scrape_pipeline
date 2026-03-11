@@ -164,7 +164,7 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, lang='zh', enco
         rows_added = len(df_new) if df_new is not None else 0
 
     # Write a timestamped file recording newly added URLs (if any) by appending
-    added_path = os.path.join(year_dir, f'{TXT_PREFIX}{date}.txt')
+    added_path = os.path.join(year_dir, f'{TXT_PREFIX}{year}{month}.txt')
     return_msg = ""
     
     if new_urls:
