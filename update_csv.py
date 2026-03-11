@@ -131,17 +131,17 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, lang='zh', enco
     output_dir = os.path.join(base, 'output')
     lang_dir = os.path.join(output_dir, lang)
     year_dir = os.path.join(lang_dir, year)
-    month_dir = os.path.join(year_dir, month)
-    csv_name = f'{CSV_PREFIX}{date}.csv'
-    csv_path = os.path.join(month_dir, csv_name)
+    # month_dir = os.path.join(year_dir, month)
+    csv_name = f'{CSV_PREFIX}{year}{month}.csv'
+    csv_path = os.path.join(year_dir, csv_name)
 
     # Build combined DataFrame (does not overwrite original file)
     df, new_urls, df_new = add_all_data(csv_template_path, csv_path, input_data_list, TXT_PREFIX, encoding=encoding)
     
     if not os.path.exists(year_dir):
         os.makedirs(year_dir, exist_ok=True)
-    if not os.path.exists(month_dir):
-        os.makedirs(month_dir, exist_ok=True)
+    # if not os.path.exists(month_dir):
+    #     os.makedirs(month_dir, exist_ok=True)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir, exist_ok=True)
 
@@ -164,7 +164,7 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, lang='zh', enco
         rows_added = len(df_new) if df_new is not None else 0
 
     # Write a timestamped file recording newly added URLs (if any) by appending
-    added_path = os.path.join(month_dir, f'{TXT_PREFIX}{date}.txt')
+    added_path = os.path.join(year_dir, f'{TXT_PREFIX}{date}.txt')
     return_msg = ""
     
     if new_urls:

@@ -26,8 +26,8 @@ def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
     output_dir = os.path.join(base, 'output')
     lang_dir = os.path.join(output_dir, lang)
     year_dir = os.path.join(lang_dir, year)
-    month_dir = os.path.join(year_dir, month)
-    added_path = os.path.join(month_dir, f'{TXT_PREFIX}{date}.txt')
+    # month_dir = os.path.join(year_dir, month)
+    added_path = os.path.join(year_dir, f'{TXT_PREFIX}{year}{month}.txt')
     
     def _get(i, key):
         if isinstance(i, dict):
@@ -46,7 +46,8 @@ def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
     # - The year directory does not exist
     # - The month directory does not exist
     # - The target txt file does not exist
-    if not os.path.exists(year_dir) or not os.path.exists(month_dir) or not os.path.exists(added_path):
+    # if not os.path.exists(year_dir) or not os.path.exists(month_dir) or not os.path.exists(added_path):
+    if not os.path.exists(year_dir) or not os.path.exists(added_path):
         print(f"Target file not found at {added_path}, returning original list.")
         return {"data": extracted_data_list, "message": "Target file not found; returning original list."}
 

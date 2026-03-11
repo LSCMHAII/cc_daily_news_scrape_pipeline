@@ -66,7 +66,7 @@ Service will listen on `0.0.0.0:5000`.
   - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `input` is a list of objects with `article_url`, `title`, `date`, `website_source` field.
   - `lang` (string, e.g. `en` or `zh`). The service will save the files in folder `/output/en` or `/output/zh`.
-- Functionality: Update daily scraped news details. It will first check if the news are already added by checking `added_url_{date}.txt` file to prevent duplications. After the `daily_news_{date}.csv` file is created / updated, `added_url_{date}.txt` file would also be created / updated.
+- Functionality: Update daily scraped news details. It will first check if the news are already added by checking `added_url_{year}{month}.txt` file to prevent duplications. After the `daily_news_{year}{month}.csv` file is created / updated, `added_url_{year}{month}.txt` file would also be created / updated.
 - Example payload:
 ```json
 {
@@ -79,7 +79,7 @@ Service will listen on `0.0.0.0:5000`.
 }
 ```
 
-- POST `/check_added_url` — Check which input items are not recorded in the `added_url_{date}.txt` file.
+- POST `/check_added_url` — Check which input items are not recorded in the `added_url_{year}{month}.txt` file.
 - Purpose: return only items whose `article_url` are not present in the target added-URL file for the given date. If the file does not exist or cannot be read, the original input list is returned.
 - field:
   - `date` is required (string, e.g. `20250905`). 
@@ -152,9 +152,8 @@ nas_output
 │   └───en
 │   └───zh
 │       └───2025
-│           └───05
-│               └───added_url_20250521.txt
-│               └───daily_news_20250521.csv
+│           └───added_url_202505.txt
+│           └───daily_news_202505.csv
 ```
 **Next steps / optional changes**
 - Switch `docker-compose.yml` to `build: .` to let compose build the image locally.
