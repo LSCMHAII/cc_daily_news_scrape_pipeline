@@ -19,12 +19,12 @@ def _load_added_urls(dir_path, txt_prefix):
             continue
     return urls
 
-def add_all_data(csv_template_path, csv_path, input_list, txt_prefix, encoding='utf-8-sig'):
+def add_all_data(csv_template_path, csv_path, input_list, txt_prefix, lang, encoding='utf-8-sig'):
     """Append rows from input_list to a CSV file, skipping duplicates based on `article_url`.
 
     encoding: CSV file encoding to use when reading/writing (defaults to 'utf-8-sig').
     """
-    cols = ['title', 'date', 'article_url', 'website_source', 'content', 'is_complaint_related', 'complaint_category', 'complaint_nature']
+    cols = ['title', 'date', 'article_url', 'website_source', 'content', 'is_complaint_related', 'complaint_category', 'complaint_nature', 'lang']
     # cols = ['title', 'date', 'article_url', 'complaint_nature', 'complaint_category']
     # cols = ['title', 'date', 'article_url', 'category', 'strength', 'confidence']
 
@@ -71,7 +71,8 @@ def add_all_data(csv_template_path, csv_path, input_list, txt_prefix, encoding='
             _get(item, 'content'),
             _get(item, 'is_complaint_related'),
             _get(item, 'complaint_category'),
-            _get(item, 'complaint_nature')
+            _get(item, 'complaint_nature'),
+            lang,
             ####################################
             # _get(item, 'complaint_nature'),
             # _get(item, 'complaint_category')
@@ -129,14 +130,15 @@ def update_csv_sheet(app_const, input_data_list=None, date=None, lang='zh', enco
     
     # Create timestamped result file name
     output_dir = os.path.join(base, 'output')
-    lang_dir = os.path.join(output_dir, lang)
-    year_dir = os.path.join(lang_dir, year)
+    # lang_dir = os.path.join(output_dir, lang)
+    # year_dir = os.path.join(lang_dir, year)
+    year_dir = os.path.join(output_dir, year)
     # month_dir = os.path.join(year_dir, month)
     csv_name = f'{CSV_PREFIX}{year}{month}.csv'
     csv_path = os.path.join(year_dir, csv_name)
 
     # Build combined DataFrame (does not overwrite original file)
-    df, new_urls, df_new = add_all_data(csv_template_path, csv_path, input_data_list, TXT_PREFIX, encoding=encoding)
+    df, new_urls, df_new = add_all_data(csv_template_path, csv_path, input_data_list, TXT_PREFIX, lang, encoding=encoding)
     
     if not os.path.exists(year_dir):
         os.makedirs(year_dir, exist_ok=True)

@@ -24,8 +24,9 @@ def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
     base = BASE_PATH or ''
     
     output_dir = os.path.join(base, 'output')
-    lang_dir = os.path.join(output_dir, lang)
-    year_dir = os.path.join(lang_dir, year)
+    # lang_dir = os.path.join(output_dir, lang)
+    # year_dir = os.path.join(lang_dir, year)
+    year_dir = os.path.join(output_dir, year)
     # month_dir = os.path.join(year_dir, month)
     added_path = os.path.join(year_dir, f'{TXT_PREFIX}{year}{month}.txt')
     

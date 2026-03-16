@@ -149,11 +149,9 @@ nas_output
 ├───en_news_config.json
 ├───zh_news_config.json
 ├───output
-│   └───en
-│   └───zh
-│       └───2025
-│           └───added_url_202505.txt
-│           └───daily_news_202505.csv
+│   └───2025
+│       └───added_url_202505.txt
+│       └───daily_news_202505.csv
 ```
 **Next steps / optional changes**
 - Switch `docker-compose.yml` to `build: .` to let compose build the image locally.
