@@ -4,6 +4,7 @@ import requests
 from flask import Flask, jsonify, request
 
 from return_news_config import return_news_config
+from return_extract_prompt import return_extract_prompt
 from update_csv import update_csv_sheet as update_csv
 from check_added_url import check_added_url
 
@@ -177,7 +178,7 @@ def trigger_run():
 @app.route('/news_config', methods=['GET'])
 def trigger_get_news_config():
     """
-    The entry point for the web service. It receives the launch request.
+    Return the news config base on the specified language. The config include source, url and prompt of different news source.
         lang(string): "en" or "zh"
     """
     
@@ -208,6 +209,15 @@ def trigger_get_news_config():
     # return jsonify(response), 202
     
     return jsonify(return_news_config(APP_CONST, lang)), 200
+
+@app.route('/extract_prompt', methods=['GET'])
+def trigger_get_extract_prompt():
+    """
+    Returns the prompt for extracting prompt content and help categorizing the news.
+    """
+    
+    print(f"BACKGROUND TASK STARTED for endpoint: /extract_prompt")
+    return jsonify(return_extract_prompt(APP_CONST)), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

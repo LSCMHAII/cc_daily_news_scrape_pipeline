@@ -2,14 +2,15 @@ import os
 
 def return_news_config(app_const, lang):
     """
-    The entry point for the news config retrieval. It receives the launch request.
+    Return the news config base on the specified language. The config include source, url and prompt of different news source.
         lang(string): "en" or "zh"
     """
     
     BASE_PATH = app_const['BASE_PATH']
     
     base = BASE_PATH or ''
-    news_config_path = os.path.join(base, f'{lang}_news_config.json')
+    config_dir = os.path.join(base, 'config')
+    news_config_path = os.path.join(config_dir, f'{lang}_news_config.json')
     
     if not os.path.exists(news_config_path):
         print(f"News config file not found at {news_config_path}.")
