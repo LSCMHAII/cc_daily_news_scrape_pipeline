@@ -24,10 +24,7 @@ def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
     base = BASE_PATH or ''
     
     output_dir = os.path.join(base, 'output')
-    # lang_dir = os.path.join(output_dir, lang)
-    # year_dir = os.path.join(lang_dir, year)
     year_dir = os.path.join(output_dir, year)
-    # month_dir = os.path.join(year_dir, month)
     added_path = os.path.join(year_dir, f'{TXT_PREFIX}{year}{month}.txt')
     
     def _get(i, key):
@@ -35,7 +32,8 @@ def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
             return i.get(key)
         return getattr(i, key, None)
 
-    # item is wrapped in {'json': {...}} structure
+    # item is wrapped in {'json': {...}} structure when use JSON.stringify in n8n
+    # Details: https://docs.n8n.io/courses/level-two/chapter-1/#creating-data-sets-with-the-code-node
     # return item without wrapping in json
     extracted_data_list = []
     for jsonItem in input_data_list:
@@ -45,9 +43,7 @@ def check_added_url(app_const, input_data_list=None, date=None, lang='zh'):
             
     # Return original list if:
     # - The year directory does not exist
-    # - The month directory does not exist
     # - The target txt file does not exist
-    # if not os.path.exists(year_dir) or not os.path.exists(month_dir) or not os.path.exists(added_path):
     if not os.path.exists(year_dir) or not os.path.exists(added_path):
         print(f"Target file not found at {added_path}, returning original list.")
         return {"data": extracted_data_list, "message": "Target file not found; returning original list."}
