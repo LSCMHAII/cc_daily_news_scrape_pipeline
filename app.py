@@ -87,7 +87,6 @@ def trigger_check_added_url():
     """
     Check if url already existed in the txt file. Return url that are not existed in the txt file.
         date(string): "20250905"
-        callback_url(string): "https://webhook.site/xxxx-xxxx-xxxx-xxxx"
         input(list): [{"article_url": "https://example.com/news1"}, {"article_url": "https://example.com/news2"}]
     """
     
@@ -134,7 +133,6 @@ def trigger_run():
     """
     The entry point for the web service. It receives the launch request.
         date(string): "20250905"
-        callback_url(string): "https://webhook.site/xxxx-xxxx-xxxx-xxxx"
         input(list): [{article_url: "xxx", ...}, {...}]
     """
     
@@ -180,7 +178,6 @@ def trigger_run():
 def trigger_get_news_config():
     """
     The entry point for the web service. It receives the launch request.
-        callback_url(string): "https://webhook.site/xxxx-xxxx-xxxx-xxxx"
         lang(string): "en" or "zh"
     """
     

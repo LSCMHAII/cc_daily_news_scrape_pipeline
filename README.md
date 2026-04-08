@@ -63,14 +63,12 @@ Service will listen on `0.0.0.0:5000`.
 - POST `/run` — Launch a background job to append data to the Excel sheet. 
 - field:
   -  `date` is required (string, e.g. `20250905`). 
-  - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `input` is a list of objects with `article_url`, `title`, `date`, `website_source` field.
   - `lang` (string, e.g. `en` or `zh`). The service will save the files in folder `/output/en` or `/output/zh`.
 - Functionality: Update daily scraped news details. It will first check if the news are already added by checking `added_url_{year}{month}.txt` file to prevent duplications. After the `daily_news_{year}{month}.csv` file is created / updated, `added_url_{year}{month}.txt` file would also be created / updated.
 - Example payload:
 ```json
 {
-  "callback_url": "https://example.com/webhook",
   "date": "20250905",
   "lang": "zh",
   "input": [
@@ -83,14 +81,12 @@ Service will listen on `0.0.0.0:5000`.
 - Purpose: return only items whose `article_url` are not present in the target added-URL file for the given date. If the file does not exist or cannot be read, the original input list is returned.
 - field:
   - `date` is required (string, e.g. `20250905`). 
-  - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `input` is a list of objects with an `article_url` field.
   - `lang` (string, e.g. `en` or `zh`). The service will check the files in folder `/output/en` or `/output/zh`.
 - Functionality: Check if the article is already added. It will return the item that article_url are not found in daily sheet. No files will be updated by calling this api endpoint.
 - Example request body:
 ```json
 {
-  "callback_url": "",
   "date": "20250905",
   "lang": "zh",
   "input": [
@@ -122,12 +118,10 @@ Service will listen on `0.0.0.0:5000`.
 
 - GET `/news_config` — Return the news source configuration (e.g. which websites to scrape, and how) for a given language.
 - field:
-  - `callback_url` is required. The service will POST a JSON payload to that URL when the job succeeds/fails.
   - `lang` (string, e.g. `en` or `zh`). The service will return the corresponding config JSON content from `en_news_config.json` or `zh_news_config.json`.
 - Example request body:
 ```json
 {
-  "callback_url": "https://example.com/webhook",
   "lang": "en"
 }
 ```
