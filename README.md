@@ -126,13 +126,13 @@ Service will listen on `0.0.0.0:5000`.
 }
 ```
 
-- GET `/extract_prompt` — Retrieve the prompt for extracting and categorizing news content.
+<!-- - GET `/extract_prompt` — Retrieve the prompt for extracting and categorizing news content.
   - Functionality: Returns the content of the `extract_content_prompt.txt` file as plain text. If the file is missing or cannot be read, an error is returned.
   - Example response:
     ```text
     Successfully retrieved extract content prompt from /path/to/extract_content_prompt.txt.
     [Prompt content here]
-    ```
+    ``` -->
 
 **Compose volume & network notes**
 - `docker-compose.yml` mounts `NAS` into the container at `/app/nas_data`. Ensure that path and file permissions match your environment.

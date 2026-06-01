@@ -210,14 +210,14 @@ def trigger_get_news_config():
     
     return jsonify(return_news_config(APP_CONST, lang)), 200
 
-@app.route('/extract_prompt', methods=['GET'])
-def trigger_get_extract_prompt():
-    """
-    Returns the prompt for extracting prompt content and help categorizing the news.
-    """
+# @app.route('/extract_prompt', methods=['GET'])
+# def trigger_get_extract_prompt():
+#     """
+#     Returns the prompt for extracting prompt content and help categorizing the news.
+#     """
     
-    print(f"BACKGROUND TASK STARTED for endpoint: /extract_prompt")
-    return jsonify(return_extract_prompt(APP_CONST)), 200
+#     print(f"BACKGROUND TASK STARTED for endpoint: /extract_prompt")
+#     return jsonify(return_extract_prompt(APP_CONST)), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
